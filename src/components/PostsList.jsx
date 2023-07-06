@@ -6,7 +6,8 @@ import Modal from "./Modal";
 
 import classes from "./PostsList.module.css";
 
-function PostsList() {
+function PostsList({modalIsVisible, onStopPosting}) {
+
   const [enteredText, setEnteredText] = useState("");
   const [enteredName, setEnteredName] = useState("");
 
@@ -20,15 +21,18 @@ function PostsList() {
 
   return (
     <>
-      <Modal>
-        <NewPost
-          onChangeText={changeTextHandler}
-          onChangeName={changeNameHandler}
-        />
-      </Modal>
+      {modalIsVisible && (
+        <Modal onClose={onStopPosting}>
+          <NewPost
+            onChangeText={changeTextHandler}
+            onChangeName={changeNameHandler}
+            onCancel={onStopPosting}
+          />
+        </Modal>
+      )}
       <ul className={classes.posts}>
         <Post author={enteredName} body={enteredText} />
-        <Post author={enteredName} body={enteredText}  />
+        <Post author={enteredName} body={enteredText} />
       </ul>
     </>
   );
