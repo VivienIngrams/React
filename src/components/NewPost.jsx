@@ -1,18 +1,15 @@
-
 import classes from './NewPost.module.css';
 
 function NewPost(props) {
-
-
   return (
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea onChange={props.onChangeText} id="body" required rows={3} />
+        <textarea id="body" required rows={3} onChange={props.onChangeText}/>
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input onChange={props.onChangeName} type="text" id="name" required />
+        <input type="text" id="name" required onChange={props.onChangeName} />
       </p>
     </form>
   );
