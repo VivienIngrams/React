@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import NewPost from "./NewPost";
 import Post from "./Post";
@@ -7,9 +7,27 @@ import Modal from "./Modal";
 import classes from "./PostsList.module.css";
 
 function PostsList({ modalIsVisible, onStopPosting }) {
+ 
   const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    async function fetchPosts() {
+      const response = await fetch('http://localhost:8080/posts');
+      const resData = await response.json();
+      setPosts(resData.posts);
+    }
+
+    fetchPosts();
+  }, []);
+
   function addPostHandler(postData) {
+    fetch('http://localhost:8080/posts', {
+      method: 'POST',
+      body: JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     setPosts((currentPosts) => [postData, ...currentPosts]);
   }
 
@@ -29,7 +47,7 @@ function PostsList({ modalIsVisible, onStopPosting }) {
       ) : (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>There are no posts yet.</h2>
-          <p>Start adding some posts!</p>
+          <p>Add the first one yourself!</p>
         </div>
       )}
     </>
