@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import classes from "./NewPost.module.css";
 
-function NewPost({ onCancel }) {
+function NewPost({ onCancel, onAddPost }) {
   const [enteredText, setEnteredText] = useState("");
   const [enteredName, setEnteredName] = useState("");
 
@@ -19,7 +19,8 @@ function NewPost({ onCancel }) {
     const postData = {
       text: enteredText,
       name: enteredName
-    }
+    };
+    onAddPost(postData);
     onCancel();
   }
 
