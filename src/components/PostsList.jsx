@@ -1,43 +1,25 @@
-import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
-import NewPost from "./NewPost";
 import Post from "./Post";
-import Modal from "./Modal";
 
 import classes from "./PostsList.module.css";
 
-function PostsList({ modalIsVisible, onStopPosting }) {
- 
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch('http://localhost:8080/posts');
-      const resData = await response.json();
-      setPosts(resData.posts);
-    }
-
-    fetchPosts();
-  }, []);
+function PostsList() {
+  const posts = useLoaderData();
 
   function addPostHandler(postData) {
-    fetch('http://localhost:8080/posts', {
-      method: 'POST',
+    fetch("http://localhost:8080/posts", {
+      method: "POST",
       body: JSON.stringify(postData),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
     setPosts((currentPosts) => [postData, ...currentPosts]);
   }
 
   return (
     <>
-      {modalIsVisible && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onAddPost={addPostHandler} onCancel={onStopPosting} />
-        </Modal>
-      )}
       {posts.length > 0 ? (
         <ul className={classes.posts}>
           {posts.map((post) => (
