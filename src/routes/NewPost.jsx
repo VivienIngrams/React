@@ -18,7 +18,7 @@ function NewPost() {
           <input type="text" id="name" name="name" required />
         </p>
         <p className={classes.actions}>
-          <Link to=".." type="button" >
+          <Link to="/" type="button" >
             Cancel
           </Link>
           <button>Submit</button>
